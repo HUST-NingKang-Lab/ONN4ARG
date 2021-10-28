@@ -1,7 +1,7 @@
 # ONN4ARG
 [ONN4ARG](http://onn4arg.xfcui.com/) is an Ontology-aware Neural Network model for Antibiotic Resistance Gene (ARG) annotation predictions. It employs a novel ontology-aware layer to encourage annotation predictions satisfying the ontology rules (i.e., the ontology tree structure). It requires the [Diamond](https://github.com/bbuchfink/diamond) and the [HHblits](https://github.com/soedinglab/hh-suite) alignment tools to run. Our source codes are available on [GitHub](https://github.com/HUST-NingKang-Lab/ONN4ARG), and our pre-built ARG database and our pre-trained model can be downloaded from [Zenodo](https://zenodo.org/record/4973684). ONN4ARG provides [web service](http://onn4arg.xfcui.com/) for fast ARG prediction.
 
-<img src="image/Figure1.png" width="828" height="736" align="middle">
+<img src="image/Figure 1.png" width="828" height="736" align="middle">
 Overview of the ONN4ARG model and its use for novel ARG discovery. a. The input (left), architecture (middle), and output (right) of the ONN4ARG model. ONN4ARG takes similarities between the query gene sequence and ARG gene sequences and profiles as inputs. Then, ontology-aware layers (i.e., O1, O2, O3, and O4) are employed to incorporate ancestor and descendant annotations to enhance annotation accuracy. ONN4ARG outputs multi-level annotations of antibiotic resistance types, which are compatible with the antibiotic resistance ontology structure. b. Building the dataset for training and testing and applying it on microbiome sequencing data to discover novel ARGs.
 
 ## Database
