@@ -21,9 +21,9 @@ The antibiotic resistance ontology was organized into an ontology structure, whi
 - At least 8 GB RAM
 
 ## Dependency
-- Pytorch 1.7.1
-- diamond 0.9.0 [https://github.com/bbuchfink/diamond/releases?page=6]
-- hhblits [https://github.com/soedinglab/hh-suite]
+- [Pytorch 1.7.1](https://github.com/pytorch/pytorch)
+- [diamond 0.9.0](https://github.com/bbuchfink/diamond/releases?page=6)
+- [hhblits](https://github.com/soedinglab/hh-suite)
 - NumPy
 - h5py
 - tqdm
