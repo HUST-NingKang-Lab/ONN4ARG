@@ -1,8 +1,10 @@
 # ONN4ARG
+![](https://img.shields.io/badge/status-beta-brightgreen?style=flat-square&logo=appveyor) [![](https://img.shields.io/badge/DOI-10.1101/2021.07.30.454403-brightgreen?style=flat-square&logo=appveyor)](https://www.biorxiv.org/content/10.1101/2021.07.30.454403) ![](https://img.shields.io/github/license/HUST-NingKang-Lab/ONN4ARG?style=flat-square&logo=appveyor)
+
 [ONN4ARG](http://onn4arg.xfcui.com/) is an Ontology-aware Neural Network model for Antibiotic Resistance Gene (ARG) annotation predictions. It employs a novel ontology-aware layer to encourage annotation predictions satisfying the ontology rules (i.e., the ontology tree structure). It requires the [Diamond](https://github.com/bbuchfink/diamond) and the [HHblits](https://github.com/soedinglab/hh-suite) alignment tools to run. Our source codes are available on [GitHub](https://github.com/HUST-NingKang-Lab/ONN4ARG), and our pre-built ARG database and our pre-trained model can be downloaded from [Zenodo](https://zenodo.org/record/4973684). ONN4ARG provides [web service](http://onn4arg.xfcui.com/) for fast ARG prediction.
 
 <img src="image/Figure 1.png" width="828" height="736" align="middle">
-Overview of the ONN4ARG model and its use for novel ARG discovery. a. The input (left), architecture (middle), and output (right) of the ONN4ARG model. ONN4ARG takes similarities between the query gene sequence and ARG gene sequences and profiles as inputs. Then, ontology-aware layers (i.e., O1, O2, O3, and O4) are employed to incorporate ancestor and descendant annotations to enhance annotation accuracy. ONN4ARG outputs multi-level annotations of antibiotic resistance types, which are compatible with the antibiotic resistance ontology structure. b. Building the dataset for training and testing and applying it on microbiome sequencing data to discover novel ARGs.
+Overview of the ONN4ARG model and its use for novel ARG discovery. (A) The antibiotic resistance gene ontology contains four levels. The root (first level) is a single node, namely, “arg”. There are 1, 2, 34, and 277 nodes from the first level to the fourth level, respectively. (B) The feature encoding procedure of ONN4ARG model. The sequence alignment features and profile HMMs features are encoded by calling Diamond and HHblits. (C) The architecture of the ontology-aware neural network could be described in four functional layers, including feature embedding layer, residual layer, compress layer and ontology-aware layer. The ontology-aware layer is a partially connected layer which encourage annotation predictions satisfying the ontology rules (i.e., the ontology tree structure). Specially, weight between nodes with relationship (e.g., parent and child) satisfying the ontology rules would be saved in the partially connected layer, and weights between irrelevant nodes would be masked. (D) Building the dataset for training and testing, and applying ONN4ARG model on metagenomic samples to discover candidate novel ARGs.
 
 ## Database
 The ARGs we used in this study for model training and testing were from the Comprehensive Antibiotic Resistance Database (CARD, v3.0.3). We also used protein sequences from the UniProt (SwissProt and TrEMBL) database to expand our training dataset. First, genes with ARG annotations were collected from CARD (2,587 ARGs) and SwissProt (2,261 ARGs). Then, their close homologs (with sequence identities greater than 90%) were collected from TrEMBL (23,728 homologous genes). These annotated and homologous ARGs made up our positive dataset. The negative dataset was made from non-ARG genes that had relatively weak sequence similarities to ARG genes (with sequence identities smaller than 90% and bit-scores smaller than alignment lengths) but not annotated as ARG genes in SwissProt (17,937 genes). Finally, redundant genes with identical sequences were filtered out. As a result, our ARG gene dataset, namely, ONN4ARG-DB, contained 28,396 positive and 17,937 negative genes. For evaluation and comparison of ONN4ARG, 75% of the dataset was randomly selected for training, and the remaining 25% of the dataset was selected for testing.
@@ -11,22 +13,22 @@ The ARGs we used in this study for model training and testing were from the Comp
 The number of genes in ONN4ARG-DB. The horizontal axis indicates the logarithmic number of genes, and the vertical axis indicates different antibiotic resistance types.
 
 ## Ontology
-The antibiotic resistance ontology was organized into an ontology structure, which contains four levels. The root (first level) is a single node, namely, “arg”. There are 1, 2, 34, and 277 nodes from the first level to the fourth level, respectively. For instance, there are “beta-lactam” and “non-beta-lactam” in the second level, “acridine dye” and “aminocoumarin” in the third level, and “acriflavine” and “clorobiocin” in the fourth level. For example, AHE40557.1 is annotated in the CARD database as a streptomycin resistance gene, which belongs to a lower-level ARG type aminoglycoside and a higher-level ARG type non-beta-lactam.
+The ARGs we used in this study for model training and testing were from the Comprehensive Antibiotic Resistance Database, CARD v3.0.3. We also used protein sequences from the UniProt (SwissProt and TrEMBL) database to expand our training dataset. First, genes with ARG annotations were collected from CARD (2,587 ARGs) and SwissProt (2,261 ARGs). Then, their close homologs (sequence identity > 90% and coverage > 98%) were collected from TrEMBL (23,728 homologous genes). These annotated and homologous ARGs made up our ARG dataset. The non-ARG dataset was made from non-ARG genes that had relatively weak sequence similarities to ARG genes (sequence identity < 90% and bit-scores < alignment lengths) but not annotated as ARG genes in SwissProt (17,937 non-ARG genes). Finally, redundant genes with identical sequences were filtered out. As a result, our ARG gene dataset, namely, ONN4ARG-DB, contained 28,396 ARG genes and 17,937 non-ARG genes.
 
 ## Requirements
 
 - Unix/Linux operating system
 
-- At least 1 GB free disk space
-- At least 8 GB RAM
+- At least 128 GB free disk space
+- At least 16 GB RAM
 
 ## Dependency
 - [Pytorch 1.7.1](https://github.com/pytorch/pytorch)
 - [diamond 0.9.0](https://github.com/bbuchfink/diamond/releases?page=6)
 - [hhblits](https://github.com/soedinglab/hh-suite)
-- NumPy
-- h5py
-- tqdm
+- [NumPy 1.20.3](https://numpy.org/)
+- [h5py](https://pypi.org/project/h5py/)
+- [tqdm](https://tqdm.github.io/)
 
 ## Installation
 We recommend deploying ONN4ARG using `git` and `conda`.
@@ -34,6 +36,8 @@ We recommend deploying ONN4ARG using `git` and `conda`.
 ```shell
 # clone this repository
 git clone https://github.com/HUST-NingKang-Lab/ONN4ARG.git
+# download model
+wget https://github.com/HUST-NingKang-Lab/ONN4ARG/releases/download/v1.0/onn4arg.zip
 
 ```
 
@@ -41,7 +45,7 @@ git clone https://github.com/HUST-NingKang-Lab/ONN4ARG.git
 
 ./predict.sh FASTA_fileprefix
 
-The program will take "FASTA_fileprefix.fasta" as input and store the predicted annotations in "FASTA_fileprefix.out".
+The program will take "FASTA_fileprefix.fasta" as input and store the predicted annotations in "FASTA_fileprefix.out". Note that only one sequence is supported in the input FASTA file.
 
 
 ## Developers
