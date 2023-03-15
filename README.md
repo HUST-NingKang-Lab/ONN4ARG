@@ -24,9 +24,9 @@ The ARGs we used in this study for model training and testing were from the Comp
 
 ## Dependency
 - [Pytorch 1.7.1](https://github.com/pytorch/pytorch)
-- [diamond 0.9.0](https://github.com/bbuchfink/diamond/releases?page=6)
-- [hhblits](https://github.com/soedinglab/hh-suite)
+- [diamond 0.9.10](https://github.com/bbuchfink/diamond/releases?page=6)
 - [NumPy 1.20.3](https://numpy.org/)
+- [hhblits](https://github.com/soedinglab/hh-suite)
 - [h5py](https://pypi.org/project/h5py/)
 - [tqdm](https://tqdm.github.io/)
 
@@ -34,18 +34,29 @@ The ARGs we used in this study for model training and testing were from the Comp
 We recommend deploying ONN4ARG using `git` and `conda`.
 
 ```shell
-# clone this repository
-git clone https://github.com/HUST-NingKang-Lab/ONN4ARG.git
-# download model
-wget https://github.com/HUST-NingKang-Lab/ONN4ARG/releases/download/v1.0/onn4arg.zip
-
+# create the environment
+conda env create -f environment.yaml
+# activate the environment
+conda activate onn4arg
+# install via pip
+pip install onn4arg
+# install via source codes
+wget https://files.pythonhosted.org/packages/f6/c7/3cd9a628628b8c36aec58cc7a2b0db8b0926213c4b4f8e44887657eaa83d/onn4arg-1.0.tar.gz
+tar zvxf onn4arg-1.0.tar.gz
+# download model files
+wget https://github.com/HUST-NingKang-Lab/ONN4ARG/releases/download/v1.0.1/onn4arg-v1.0-model.tar.gz
+tar zvxf onn4arg-v1.0-model.tar.gz
+# add onn4arg to your PATH and add executable permissions for python scripts if installed via pip
+export PATH=/path_to_anaconda/envs/onn4arg/lib/python3.7/site-packages/onn4arg:$PATH
+chmod +x /path_to_anaconda/envs/onn4arg/lib/python3.7/site-packages/onn4arg/*.py
+# check installation
+predict.sh model/example
 ```
 
 ## Usage:
-
-./predict.sh FASTA_fileprefix
-
-The program will take "FASTA_fileprefix.fasta" as input and store the predicted annotations in "FASTA_fileprefix.out". Note that only one sequence is supported in the input FASTA file.
+- predict.sh Single_FASTA_fileprefix
+- run.sh Multiple_FASTA_filename
+The program will take "FASTA_fileprefix.fasta" as input and store the predicted annotations in "FASTA_fileprefix.out". Note that only one sequence is supported in the input FASTA file. If you have multiple sequences in a single FASTA file, please consider using `run.sh`
 
 
 ## Developers
@@ -60,3 +71,4 @@ Xuefeng Cui |xfcui@email.sdu.edu.cn| School of Computer Science, Shandong Univer
 Kang Ning |ningkang@hust.edu.cn| School of Life Science and Technology, Huazhong University of Science & Technology
 ## Reference
 Yuguo Zha, Cheng Chen, Qihong Jiao, Xiaomei Zeng, Xuefeng Cui, Kang Ning, Ontology-Aware Deep Learning Enables Novel Antibiotic Resistance Gene Discovery Towards Comprehensive Profiling of ARGs, bioRxiv 2021.07.30.454403 (2021) [(download the PDF file)](https://doi.org/10.1101/2021.07.30.454403)
+
