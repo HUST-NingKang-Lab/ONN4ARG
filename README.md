@@ -1,5 +1,5 @@
 # ONN4ARG
-![](https://img.shields.io/badge/status-beta-brightgreen?style=flat-square&logo=appveyor) [![](https://img.shields.io/badge/DOI-10.1101/2021.07.30.454403-brightgreen?style=flat-square&logo=appveyor)](https://www.biorxiv.org/content/10.1101/2021.07.30.454403) ![](https://img.shields.io/github/license/HUST-NingKang-Lab/ONN4ARG?style=flat-square&logo=appveyor)
+![](https://img.shields.io/badge/status-beta-brightgreen?style=flat-square&logo=appveyor) [![downloads](https://static.pepy.tech/badge/onn4arg)](https://pepy.tech/project/onn4arg) [![](https://img.shields.io/badge/DOI-10.1101/2021.07.30.454403-brightgreen?style=flat-square&logo=appveyor)](https://www.biorxiv.org/content/10.1101/2021.07.30.454403) ![](https://img.shields.io/github/license/HUST-NingKang-Lab/ONN4ARG?style=flat-square&logo=appveyor)
 
 [ONN4ARG](http://onn4arg.xfcui.com/) is an Ontology-aware Neural Network model for Antibiotic Resistance Gene (ARG) annotation predictions. It employs a novel ontology-aware layer to encourage annotation predictions satisfying the ontology rules (i.e., the ontology tree structure). It requires the [Diamond](https://github.com/bbuchfink/diamond) and the [HHblits](https://github.com/soedinglab/hh-suite) alignment tools to run. Our source codes are available on [GitHub](https://github.com/HUST-NingKang-Lab/ONN4ARG), and our pre-built ARG database and our pre-trained model can be downloaded from [Zenodo](https://zenodo.org/record/4973684) or [release](https://github.com/HUST-NingKang-Lab/ONN4ARG/releases/tag/v1.0). ONN4ARG provides [web service](http://onn4arg.xfcui.com/) for fast ARG prediction.
 
@@ -16,11 +16,7 @@ The number of genes in ONN4ARG-DB. The horizontal axis indicates the logarithmic
 The ARGs we used in this study for model training and testing were from the Comprehensive Antibiotic Resistance Database, CARD v3.0.3. We also used protein sequences from the UniProt (SwissProt and TrEMBL) database to expand our training dataset. First, genes with ARG annotations were collected from CARD (2,587 ARGs) and SwissProt (2,261 ARGs). Then, their close homologs (sequence identity > 90% and coverage > 98%) were collected from TrEMBL (23,728 homologous genes). These annotated and homologous ARGs made up our ARG dataset. The non-ARG dataset was made from non-ARG genes that had relatively weak sequence similarities to ARG genes (sequence identity < 90% and bit-scores < alignment lengths) but not annotated as ARG genes in SwissProt (17,937 non-ARG genes). Finally, redundant genes with identical sequences were filtered out. As a result, our ARG gene dataset, namely, ONN4ARG-DB, contained 28,396 ARG genes and 17,937 non-ARG genes.
 
 ## Requirements
-
 - Unix/Linux operating system
-
-- At least 128 GB free disk space
-- At least 16 GB RAM
 
 ## Dependency
 - [Pytorch 1.7.1](https://github.com/pytorch/pytorch)
@@ -54,9 +50,10 @@ predict.sh model/example
 ```
 
 ## Usage:
-- predict.sh Single_FASTA_fileprefix
-- run.sh Multiple_FASTA_filename
-The program will take "FASTA_fileprefix.fasta" as input and store the predicted annotations in "FASTA_fileprefix.out". Note that only one sequence is supported in the input FASTA file. If you have multiple sequences in a single FASTA file, please consider using `run.sh`
+- `predict.sh Single_FASTA_fileprefix`
+- `run.sh Multiple_FASTA_filename`
+
+The program will take `FASTA_fileprefix.fasta` as input and store the predicted annotations in "FASTA_fileprefix.out". Note that only one sequence is supported in the input FASTA file. If you have multiple sequences in a single FASTA file, please use `run.sh`.
 
 
 ## Developers
